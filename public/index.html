@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WiiMote Interface</title>
+    <link
+      rel="stylesheet"
+      type="text/css" 
+      href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css" 
+      href="./style.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="page-header">
+        <h1>Wiimote Interface</h1>
+      </div>
+      
+      <hr />
+
+      <div class="status" id="status">
+      </div>
+
+      <div class="data">
+        Hex
+          <div id="hex"></div>
+        Bits
+          <div id="bin"></div>
+        <br />
+          <div id="bin"></div>
+        <br />
+        Data Per Second <div id="dps"></div>
+      </div>
+
+
+      <hr />
+
+      <div class="gamepad">
+        <div class="game-btn" id="btn-up">↑</div>
+        <div class="game-btn" id="btn-down">↓</div>
+        <div class="game-btn" id="btn-left">←</div>
+        <div class="game-btn" id="btn-right">→</div>
+        <div class="game-btn" id="btn-a">A</div>
+        <div class="game-btn" id="btn-1">1</div>
+        <div class="game-btn" id="btn-2">2</div>
+        <div class="game-btn" id="btn-plus">+</div>
+        <div class="game-btn" id="btn-minus">-</div>
+        <div class="game-btn" id="btn-home">h</div>
+        <div class="game-btn" id="btn-trigger">t</div>
+      </div>
+
+      <hr />
+      
+      <div class="xy-stage stage">
+        <div class="dot" id="xy-dot">&nbsp;</div>
+      </div>
+      <div class="xz-stage stage">
+        <div class="dot" id="xz-dot">&nbsp;</div>
+      </div>
+
+
+      <hr />
+
+      <div>
+        <button class="btn btn-primary" onclick="writeDevice([0x11, 0b00010000])">
+          Led 1
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x11, 0b00100000])">
+          Led 2
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x11, 0b01000000])">
+          Led 3
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x11, 0b10000000])">
+          Led 4
+        </button>
+
+        <hr />
+        <button class="btn btn-primary" onclick="writeDevice([0x10, 0x01])">
+          Rumble On
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x10, 0x10])">
+          Rumble Off
+        </button>
+
+        <hr />
+
+        <button class="btn btn-primary" onclick="writeDevice([0x12, 0x00, 0x30])">
+          Input Mode x30
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x12, 0x00, 0x31])">
+          Input Mode x31
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x12, 0x00, 0x32])">
+          Input Mode x32
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x12, 0x00, 0x33])">
+          Input Mode x33
+        </button>
+        <button class="btn btn-primary" onclick="writeDevice([0x12, 0x00, 0x37])">
+          Input Mode x37
+        </button>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>    
+  </body>
+</html>
