@@ -22,15 +22,16 @@ io.on('connection', (socket) => {
   socket.on('disconnect', _ => { console.log('socket disconnect'); });
   
   socket.on('write device', (data) => {
-    console.log('write device', data);
     device.write(data);
   });
 });
 
-if (device)
-  device.on('data', d => {
-    io.emit('data', d);
-  });
+if (device) {
+  console.log(deviceInfo);
+  device.on('data', d => io.emit('data', d));
+} else {
+  console.log('no device found. connect wiimote and restart.')
+}
 
 app.use(express.static('public'));
 http.listen(4001, () => { console.log('listening on *:4001'); });
