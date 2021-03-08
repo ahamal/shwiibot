@@ -5,7 +5,12 @@ const
 const
   app = express(),
   http = require('http').Server(app),
-  io = require('socket.io')(http);
+  io = require('socket.io')(http, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
+    }  
+  });
 
 const
   deviceInfo = HID.devices().find(d => d.product === 'Nintendo RVL-CNT-01-TR'),
@@ -13,7 +18,7 @@ const
 
 io.on('connection', (socket) => {
   console.log('socket connection');
-  socket.emit('status', { device: device ? true : false });
+  socket.emit('status', { device: device });
   socket.on('disconnect', _ => { console.log('socket disconnect'); });
   
   socket.on('write device', (data) => {
@@ -28,4 +33,4 @@ if (device)
   });
 
 app.use(express.static('public'));
-http.listen(3000, () => { console.log('listening on *:3000'); });
+http.listen(4001, () => { console.log('listening on *:4001'); });
