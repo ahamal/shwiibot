@@ -9,7 +9,7 @@ const
     cors: {
       origin: '*',
       methods: ['GET', 'POST']
-    }  
+    }
   });
 
 const
