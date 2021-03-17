@@ -6,54 +6,58 @@ const
   config = require('./config.js');
 
 
-// Socket
+// SocketIO
 const
   app = express(),
   http = require('http').Server(app),
-  io = require('socket.io')(http, {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST']
-    }
-  });
+  io = require('socket.io')(http, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 // Serial
 const
   port = new SerialPort(config.serialPort, config.serialPortConfig),
   parser = port.pipe(new Readline({ delimiter: '\n' }));
 
-// Bluetooth
+// Wiimote
 const
-  deviceInfo = HID.devices().find(d => d.product === 'Nintendo RVL-CNT-01-TR'),
-  device = deviceInfo && new HID.HID(deviceInfo.path);
+  wiimoteInfo = HID.devices().find(d => d.product === config.wiimoteProduct),
+  wiimote = wiimoteInfo && new HID.HID(wiimoteInfo.path);
+
+var
+  portReady = false,
+  wiimoteReady = false;
 
 
+// SocketIO
 io.on('connection', (socket) => {
-  console.log('socket connection');
-  socket.emit('status', { device: device });
-  socket.on('disconnect', _ => { console.log('socket disconnect'); });
-  
-  socket.on('write device', (data) => {
-    device.write(data);
+  console.log('[websocket connect]');
+  socket.on('disconnect', _ => { console.log('[websocket disconnect]'); });
+  socket.on('write wiimote', (data) => {
+    if (wiimoteReady)
+      wiimote.write(data);
+  });
+  socket.on('write serial', (data) => { 
+    if (portReady)
+      port.write(data);
   });
 });
 
-if (device) {
-  console.log(deviceInfo);
-  device.on('data', d => io.emit('data', d));
+
+// Wiimote + SocketIO
+if (wiimote) {
+  console.log('Wiimote fround connected.')
+  wiimote.on('data', d => io.emit('wiimote', d));
+  wiimoteReady = true;
 } else {
-  console.log('no device found. connect wiimote and restart.')
+  console.error('No wiimote found. Connect and restart.');
 }
 
 
-// Read the port data
+// Port + SocketIO
 port.on('open', () => {
-  console.log('serial port open');
+  console.log('Serial port connected');
+  portReady = true;
 
-
-
-
-  setInterval(_ => {
+    setInterval(_ => {
     const
       angle = Math.floor(Math.random() * 100) + 20,
       data = 'D2' + String.fromCharCode(angle) + '\n';
@@ -68,14 +72,23 @@ port.on('open', () => {
     console.log('Writing: ', angle)
     port.write(data);
   }, 300)
-  
+
+
 });
 
-parser.on('data', data =>{
-  console.log('got word from arduino:', data);
+port.on('error', e => {
+  console.error('No serialport found. Connect and restart.')
+})
+
+parser.on('data', data => {
+  io.emit('serial', data);
 });
 
 
-
+// Server Start
 app.use(express.static('public'));
 http.listen(4001, () => { console.log('listening on *:4001'); });
+
+
+
+
