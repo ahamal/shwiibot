@@ -1,0 +1,14 @@
+.raw-data {
+  width: 500px;
+  margin: 20px auto;
+  font-size: 12px;
+}
+
+.raw-data .label {
+  font-weight: bold;
+  float: left;
+}
+
+.raw-data .value {
+  margin-left: 100px;
+}

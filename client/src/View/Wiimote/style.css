@@ -1,0 +1,16 @@
+.wiimote {
+  font-family: monospace;
+}
+
+.wiimote  .page {
+  width: 540px;
+  padding: 10px 20px;
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.wiimote .page:not(:last-child) {
+  /* border-right: 1px solid #eee; */
+}

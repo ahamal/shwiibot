@@ -1,0 +1,16 @@
+.robot {
+  font-family: monospace;
+}
+
+.robot .sliders {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sliders .slider-group .slider {
+  width: 300px;
+}
+
+.sliders .slider-group .slider input {
+  width: 100%;
+}

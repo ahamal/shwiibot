@@ -1,0 +1,29 @@
+.ircamera {
+  margin: 20px 0;
+
+}
+.ircamera .stage {
+  width: 510px;
+  height: 384px;
+  position: relative;
+  border: 1px solid #eee;
+  margin: auto;
+}
+
+.ircamera .stage .dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background: #000;
+}
+
+.ircamera .info {
+  position: absolute;
+  width: 100px;
+  top: 5px;
+  left: 5px;
+  padding: 5px;
+  margin: 0;
+  background: #fafafa;
+  color: #666;
+}

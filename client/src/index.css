@@ -1,0 +1,14 @@
+button {
+  padding: 8px 10px;
+  height: auto;
+  line-height: initial;
+}
+
+hr {
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+html, body, #root, .app {
+  height: 100%;
+}

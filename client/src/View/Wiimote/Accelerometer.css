@@ -1,0 +1,49 @@
+.accelerometer {
+  width: 550px;
+  margin: 10px auto;
+}
+
+
+.accelerometer .label {
+  font-weight: bold;
+}
+
+.accelerometer .g-container {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px;
+}
+
+
+.accelerometer .stage-2d,
+.accelerometer .stage-1d {
+  background: #eee;
+  height: 10px;
+  position: relative;
+}
+
+.accelerometer .stage-2d {
+  width: 128px;
+  height: 128px;
+}
+
+.accelerometer .stage-2d .dot{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #000;
+}
+
+
+.accelerometer .stage-1d {
+  width: 256px;
+  height: 10px;
+  margin-bottom: 5px;
+}
+
+.accelerometer .stage-1d .dot {
+  position: absolute;
+  width: 4px;
+  height: 10px;
+  background: #222;
+}
