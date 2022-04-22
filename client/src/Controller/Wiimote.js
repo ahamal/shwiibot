@@ -1,5 +1,7 @@
 import BaseController from './BaseController';
 import { Map } from 'immutable';
+import { getAccelerometerAngles } from './calc';
+
 
 class Wiimote extends BaseController {
   constructor(parent) {
@@ -15,9 +17,9 @@ class Wiimote extends BaseController {
         'trigger': false, 'home': false,
         'c': false, 'z': false
       }),
-      joystick: new Map({ 'sx': null, 'sy': null }),
-      accl1: new Map({ ax: null, ay: null, az: null }),
-      accl2: new Map({ ax: null, ay: null, az: null }),
+      stick: new Map({ 'sx': null, 'sy': null }),
+      accl1: new Map({ dx: null, dy: null, dz: null, ax: null, ay: null }),
+      accl2: new Map({ dx: null, dy: null, dz: null, ax: null, ay: null }),
       ir: new Map({})
     });
 
@@ -155,11 +157,12 @@ function updateAccelerometer(state, data) {
     return state;
   
   const
-    ax = (data[3] << 2) | ((data[1] >> 5) & 0b11),
-    ay = (data[4] << 2) | (((data[2] >> 5) & 0b1) << 1),
-    az = (data[5] << 2) | (((data[2] >> 6) & 0b1) << 1);
+    dx = (data[3] << 2) | ((data[1] >> 5) & 0b11),
+    dy = (data[4] << 2) | (((data[2] >> 5) & 0b1) << 1),
+    dz = (data[5] << 2) | (((data[2] >> 6) & 0b1) << 1),
+    [ax, ay] = getAccelerometerAngles(dx - 512, dy - 512, dz - 512);
   
-  return state.set('accl1', state.get('accl1').merge({ ax, ay, az }));
+  return state.set('accl1', state.get('accl1').merge({ dx, dy, dz, ax, ay }));
 }
 
 
@@ -187,7 +190,12 @@ function updateNunchuk(state, data) {
   if (data[0] !== 0x37)
     return state;
 
-  const l = data[21];
+  const
+    l = data[21],
+    dx = (data[18] << 2) | ((l >> 2) & 0b11),
+    dy = (data[19] << 2) | ((l >> 4) & 0b11),
+    dz = (data[20] << 2) | ((l >> 6) & 0b11),
+    [ax, ay] = getAccelerometerAngles(dx - 512, dy - 512, dz - 512);
 
   return (
     state
@@ -195,14 +203,12 @@ function updateNunchuk(state, data) {
         c: !((l >> 1) & 1),
         z: !((l & 1))
       }))
-      .set('joystick', state.get('joystick').merge({
+      .set('stick', state.get('stick').merge({
         sx: data[16],
         sy: data[17]
       }))
       .set('accl2', state.get('accl2').merge({
-        ax: (data[18] << 2) | ((l >> 2) & 0b11),
-        ay: (data[19] << 2) | ((l >> 4) & 0b11),
-        az: (data[20] << 2) | ((l >> 6) & 0b11)
+        dx, dy, dz, ax, ay        
       }))
   );
 }

@@ -32,19 +32,23 @@ io.on('connection', (socket) => {
   console.log('[websocket connect]');
   socket.on('disconnect', _ => { console.log('[websocket disconnect]'); });
   socket.on('write wiimote', (data) => {
-    if (wiimoteReady)
+    if (wiimoteReady) {
       wiimote.write(data);
+    }
   });
-  socket.on('write serial', (data) => { 
-    if (portReady)
+
+  socket.on('write serial', (data) => {
+    if (portReady) {
+      console.log(data);
       port.write(data);
+    }
   });
 });
 
 
 // Wiimote + SocketIO
 if (wiimote) {
-  console.log('Wiimote fround connected.')
+  console.log('Wiimote connected.');
   wiimote.on('data', d => io.emit('wiimote', d));
   wiimoteReady = true;
 } else {
@@ -57,23 +61,24 @@ port.on('open', () => {
   console.log('Serial port connected');
   portReady = true;
 
-    setInterval(_ => {
-    const
-      angle = Math.floor(Math.random() * 100) + 20,
-      data = 'D2' + String.fromCharCode(angle) + '\n';
-    console.log('Writing: ', angle)
-    port.write(data);
-  }, 600)
 
-  setInterval(_ => {
-    const
-      angle = Math.floor(Math.random() * 100) + 20,
-      data = 'D3' + String.fromCharCode(angle) + '\n';
-    console.log('Writing: ', angle)
-    port.write(data);
-  }, 300)
+  // var angle = 0;
+  // console.log(angle);
+  // setInterval(_ => {
+  //   // angle = angle > 200 ?  angle : angle + 10;
+  //   // const data = 'D2' + String.fromCharCode(angle) + '\n';
 
+  //   console.log('Writing: ')
+  //   port.write([68, 50, 17, 10]);
+  // }, 1000)
 
+  // setInterval(_ => {
+  //   const
+  //     angle = Math.floor(Math.random() * 100) + 20,
+  //     data = 'D3' + String.fromCharCode(angle) + '\n';
+  //   console.log('Writing: ', angle)
+  //   port.write(data);
+  // }, 300)
 });
 
 port.on('error', e => {
@@ -81,6 +86,7 @@ port.on('error', e => {
 })
 
 parser.on('data', data => {
+  console.log('[serial]', data);
   io.emit('serial', data);
 });
 
@@ -88,7 +94,3 @@ parser.on('data', data => {
 // Server Start
 app.use(express.static('public'));
 http.listen(4001, () => { console.log('listening on *:4001'); });
-
-
-
-

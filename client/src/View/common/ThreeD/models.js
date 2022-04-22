@@ -84,14 +84,14 @@ function getJoint() {
 }
 
 
-function getArm1() {
+function getArm0() {
   const r = new THREE.Group();
   const joint = getJoint();
   r.add(joint);
   return r;
 }
 
-function getArm2() {
+function getArm1() {
   const arm = new THREE.Group();
 
   const
@@ -117,14 +117,14 @@ function getArm2() {
 }
 
 
-function getArm3() {
+function getArm2() {
   const r = new THREE.Group();
   const joint = getJoint();
   r.add(joint);
   return r;
 }
 
-function getArm4() {
+function getArm3() {
   const g = new THREE.Group();
 
   const
@@ -143,12 +143,12 @@ function getArm4() {
       position: [0, 0, .2],
       color: 'black'
     }),
-    rodGeom = new THREE.CylinderGeometry( .2, .2, 6, 22 ),
+    rodGeom = new THREE.CylinderGeometry( .2, .2, 8, 22 ),
     rod = new THREE.Mesh(rodGeom, materials['red']);
 
   board2.rotation.x = Math.PI / 2;
 
-  rod.position.y = -4;
+  rod.position.y = -5;
   rod.position.z = -1.2
 
   g.add(board);
@@ -168,108 +168,107 @@ export class Bot {
     this.body = getBody();
 
     // Left ARM 
-    const leftArm1 = this.leftArm1 = getArm1();
-    leftArm1.position.x = 6.3;
-    leftArm1.position.y = 2.7;
-    leftArm1.position.z = -.6;
-    leftArm1.rotation.y = Math.PI;
-    leftArm1.rotation.x =  Math.PI;
+    const leftArm0 = this.leftArm0 = getArm0();
+    leftArm0.position.x = 6.3;
+    leftArm0.position.y = 2.7;
+    leftArm0.position.z = -.6;
+    leftArm0.rotation.y = Math.PI;
+    leftArm0.rotation.x =  Math.PI;
     
-    const leftArm2 = this.leftArm2 = getArm2();
-    leftArm2.position.x = -.9;
-    leftArm2.position.y = -1.2;
+    const leftArm1 = this.leftArm1 = getArm1();
+    leftArm1.position.x = -.9;
+    leftArm1.position.y = -1.2;
 
+    leftArm0.add(leftArm1);
+    leftArm1.rotation.y = Math.PI;
+    leftArm1.rotation.x = 3 * Math.PI / 2;
+
+    const leftArm2 = this.leftArm2 = getArm2();
     leftArm1.add(leftArm2);
+    leftArm2.position.x = -.3;
+    leftArm2.position.y = -7.4;
+    leftArm2.position.z = -.6;
+    leftArm2.rotation.z = Math.PI / 2;
     leftArm2.rotation.y = Math.PI;
-    leftArm2.rotation.x = 3 * Math.PI / 2;
+
 
     const leftArm3 = this.leftArm3 = getArm3();
     leftArm2.add(leftArm3);
-    leftArm3.position.x = -.3;
-    leftArm3.position.y = -7.4;
-    leftArm3.position.z = -.6;
-    leftArm3.rotation.z = Math.PI / 2;
-    leftArm3.rotation.y = Math.PI;
-
-
-    const leftArm4 = this.leftArm4 = getArm4();
-    leftArm3.add(leftArm4);
-    leftArm4.rotation.x = Math.PI/ 2;
-    leftArm4.rotation.z = - Math.PI/ 2;
-    leftArm4.position.x = -0.8;
-    leftArm4.position.y = -1.2;
+    leftArm3.rotation.x = Math.PI/ 2;
+    leftArm3.rotation.z = - Math.PI/ 2;
+    leftArm3.position.x = -0.8;
+    leftArm3.position.y = -1.2;
 
 
     // Right Arm
-    const rightArm1 = this.rightArm1 = getArm1();
-    rightArm1.position.x = -6.3;
-    rightArm1.position.y = 2.7;
-    rightArm1.position.z = -.6;
-    rightArm1.rotation.y = 0;
-    rightArm1.rotation.x = 3 * Math.PI / 2;
+    const rightArm0 = this.rightArm0 = getArm0();
+    rightArm0.position.x = -6.3;
+    rightArm0.position.y = 2.7;
+    rightArm0.position.z = -.6;
+    rightArm0.rotation.y = 0;
+    rightArm0.rotation.x = 3 * Math.PI / 2;
     
-    const rightArm2 = this.rightArm2 = getArm2();
-    rightArm2.position.x = -.9;
-    rightArm2.position.y = -1.2;
-    rightArm2.rotation.z = Math.PI;
+    const rightArm1 = this.rightArm1 = getArm1();
+    rightArm1.position.x = -.9;
+    rightArm1.position.y = -1.2;
+    rightArm1.rotation.z = Math.PI;
 
+    rightArm0.add(rightArm1);
+    rightArm1.rotation.y = Math.PI;
+    rightArm1.rotation.x = 3 * Math.PI / 2;
+
+    const rightArm2 = this.rightArm2 = getArm2();
     rightArm1.add(rightArm2);
+    rightArm2.position.x = -.3;
+    rightArm2.position.y = -7.4;
+    rightArm2.position.z = -.6;
+    rightArm2.rotation.z = Math.PI / 2;
     rightArm2.rotation.y = Math.PI;
-    rightArm2.rotation.x = 3 * Math.PI / 2;
+
 
     const rightArm3 = this.rightArm3 = getArm3();
     rightArm2.add(rightArm3);
-    rightArm3.position.x = -.3;
-    rightArm3.position.y = -7.4;
-    rightArm3.position.z = -.6;
-    rightArm3.rotation.z = Math.PI / 2;
-    rightArm3.rotation.y = Math.PI;
+    rightArm3.rotation.x = Math.PI/ 2;
+    rightArm3.rotation.z = - Math.PI/ 2;
+    rightArm3.position.x = -0.8;
+    rightArm3.position.y = -1.2;
 
-
-    const rightArm4 = this.rightArm4 = getArm4();
-    rightArm3.add(rightArm4);
-    rightArm4.rotation.x = Math.PI/ 2;
-    rightArm4.rotation.z = - Math.PI/ 2;
-    rightArm4.position.x = -0.8;
-    rightArm4.position.y = -1.2;
-
-    this.body.add(this.leftArm1);
-    this.body.add(this.rightArm1);
+    this.body.add(this.leftArm0);
+    this.body.add(this.rightArm0);
     
 
     this.mesh.add(this.body);
   }
 
-  dir1 = 1;
-  dir2 = 1;
-  a1 = 0;
-  a2 = 0;
+  // dir1 = 1;
+  // dir2 = 1;
+  // a1 = 0;
+  // a2 = 0;
 
-  animate() {
-    if (this.a1 < 0 || this.a1 > 1) this.dir1 *= -1;
-    if (this.a2 < 0 || this.a2 > 1) this.dir2 *= -1;
-    this.a1 += this.dir1 * .007;
-    this.a2 += this.dir2 * .01;
-    this.setAngles('r3', this.a1);
-    this.setAngles('r4', this.a2);
-    this.setAngles('r1', this.a1);
-    this.setAngles('r2', this.a2);
-  }
+  // animate() {
+  //   if (this.a1 < 0 || this.a1 > 1) this.dir1 *= -1;
+  //   if (this.a2 < 0 || this.a2 > 1) this.dir2 *= -1;
+  //   this.a1 += this.dir1 * .007;
+  //   this.a2 += this.dir2 * .01;
+  //   this.setAngle('r3', this.a1);
+  //   this.setAngle('r4', this.a2);
+  //   this.setAngle('r1', this.a1);
+  //   this.setAngle('r2', this.a2);
+  // }
 
 
   ranges = {
-    l1: ['leftArm1', 'x', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
-    l2: ['leftArm2', 'z', -Math.PI * (1/2 + 1/12), Math.PI * (1/2 - 1/12)],
-    l3: ['leftArm3', 'y', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
-    l4: ['leftArm4', 'z', -Math.PI * (1/2 + 1/12), Math.PI * (1/2 - 1/12)],
-
-    r1: ['rightArm1', 'x', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
-    r2: ['rightArm2', 'z', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
-    r3: ['rightArm3', 'y', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
-    r4: ['rightArm4', 'z', -Math.PI * (1/2 - 1/12), Math.PI * (1/2 - 1/12)],
+    l0: ['leftArm0', 'x', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
+    l1: ['leftArm1', 'z', -Math.PI * (1/2 - 1/12), Math.PI * (1/2 - 1/12)],
+    l2: ['leftArm2', 'y', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
+    l3: ['leftArm3', 'z', -Math.PI * (1/2 - 1/12), Math.PI * (1/2 - 1/12)],
+    r0: ['rightArm0', 'x', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
+    r1: ['rightArm1', 'z', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
+    r2: ['rightArm2', 'y', Math.PI * (1/2 + 1/12), Math.PI * (3/2 - 1/12)],
+    r3: ['rightArm3', 'z', -Math.PI * (1/2 - 1/12), Math.PI * (1/2 - 1/12)],
   }
 
-  setAngles(key, val) {
+  setAngle(key, val) {
     const [name, axis, a0, a1] =  this.ranges[key]; 
     this[name].rotation[axis] = a0 + (a1 - a0) * val;
   }

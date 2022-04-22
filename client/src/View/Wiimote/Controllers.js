@@ -3,7 +3,7 @@ import './Controllers.css';
 function Controllers({ state }) {
   const
     buttons = state.get('buttons'),
-    joystick = state.get('joystick'),
+    stick = state.get('stick'),
     getClass = b => ('controller-btn btn-' + b + (buttons.get(b) ? ' active' : ''));
 
   return (
@@ -29,10 +29,10 @@ function Controllers({ state }) {
 
       <div className="nunchuk">
         <div className="stick">
-          { joystick.get('sx') && joystick.get('sy') && (
+          { stick.get('sx') && stick.get('sy') && (
             <div className="dot" style={{
-              left: joystick.get('sx') * (80 / 256) - 20,
-              top: 80 - joystick.get('sy') * (80 / 256) - 20
+              left: stick.get('sx') * (80 / 256) - 20,
+              top: 80 - stick.get('sy') * (80 / 256) - 20
               }} />
           ) }
         </div>

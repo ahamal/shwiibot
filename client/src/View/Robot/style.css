@@ -2,15 +2,17 @@
   font-family: monospace;
 }
 
-.robot .sliders {
+
+.robot .row {
   display: flex;
   justify-content: space-around;
+
 }
 
-.sliders .slider-group .slider {
+.robot .slider-group .slider {
   width: 300px;
 }
 
-.sliders .slider-group .slider input {
+.robot .slider-group .slider input {
   width: 100%;
 }

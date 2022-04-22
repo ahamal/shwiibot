@@ -47,3 +47,29 @@
   height: 10px;
   background: #222;
 }
+
+
+
+.accelerometer .angle {
+  display: inline-block;
+  margin-left: 10px;
+  width: 100px;
+}
+
+.accelerometer .angle .circle {
+  width: 30px;
+  height: 30px;
+  background: #eee;
+  border-radius: 20px;
+  position: relative;
+  transform: rotate(90deg);
+}
+
+.accelerometer .angle .circle .line {
+  width: 30px;
+  height: 2px;
+  background: #999;
+  top: 50%;
+  position: absolute;
+  border-radius: 20px;
+}

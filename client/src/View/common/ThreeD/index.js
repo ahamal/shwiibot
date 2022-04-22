@@ -73,7 +73,6 @@ class RobotView extends Component {
       if (m.animate)
         m.animate();
     });
-
     // this.orbitControls.update();
   }
 

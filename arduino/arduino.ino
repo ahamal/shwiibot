@@ -4,7 +4,7 @@ Servo servos[8];
 
 const byte MAX_SIZE = 32;
 const char DELIMITER = '\n';
-char data[MAX_SIZE];
+byte data[MAX_SIZE];
 int index = 0;
 
 void setup() {
@@ -49,12 +49,17 @@ void processData() {
   if (data[0] == 'D') {
     int n = data[1] - '0';
     int angle = data[2];
-    
+
+    //Serial.println("angle");
+    //Serial.println(angle);
+
     if (n >= 2 && n <= 10 && angle > 0 && angle < 180) {
       servos[n - 2].write(angle);
       Serial.println("ok");
-      return;
+    } else {
+      Serial.println("error var");
     }
+    return;
   }
-  Serial.print("err unknown");
+  Serial.println("err ukn");
 }
